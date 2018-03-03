@@ -18,16 +18,16 @@ export default class MainList extends React.Component {
     item: {}
   };
 
-  constructor() {
-    super();
-    AsyncStorage.getItem('items').then(itemsJSON => {
-      if (itemsJSON) {
-        this.setState({
-          items: JSON.parse(itemsJSON)
-        });
-      }
-    });
-  }
+  // constructor() {
+  //   super();
+  //   AsyncStorage.getItem('items').then(itemsJSON => {
+  //     if (itemsJSON) {
+  //       this.setState({
+  //         items: JSON.parse(itemsJSON)
+  //       });
+  //     }
+  //   });
+  // }
 
   componentWillMount() {
     this.setState({ items: dummyData });
@@ -78,9 +78,9 @@ export default class MainList extends React.Component {
     this.save(arr);
   };
 
-  save = arr => {
-    AsyncStorage.setItem('items', JSON.stringify(arr));
-  };
+  // save = arr => {
+  //   AsyncStorage.setItem('items', JSON.stringify(arr));
+  // };
 
   moveToScreen = id => {
     const item = this.state.items.filter(item => item.id === id)[0];

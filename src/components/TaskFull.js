@@ -17,7 +17,9 @@ class TaskFull extends Component {
     return this.state.description;
   };
   render() {
-    const item = this.props.item
+    const { params } = this.props.navigation.state;
+
+    const item = params.item
     return (
       <View style={styles.taskFullContainer}>
         <Text style={styles.taskFullName}>{item.name}</Text>
