@@ -58,6 +58,7 @@ export default class MainList extends React.Component {
     });
     this.setState({ items: items });
   };
+
   editDescription = (description, id) => {
     const item = this.state.items.map(item => {
       item.id === id
@@ -98,6 +99,7 @@ export default class MainList extends React.Component {
           style={{ flex: 1 }}
           data={this.state.items}
           checkItemWithId={this.checkItemWithId}
+          editDescription={this.editDescription}
         />
       </View>
     );
