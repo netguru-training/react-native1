@@ -7,27 +7,20 @@ class TaskFull extends Component {
   state = {
     description: ""
   };
-
   onChangeText = text => {
     this.setState({
       description: text
     });
   };
   onEditDescription = () => {
-    // this.setState({
-    //   description: arr,
-    //   item: ""
-    // });
+    this.props.editDescription(this.state.description)
     return this.state.description;
-    // this.save(arr);
   };
-  // save = arr => {
-  //   AsyncStorage.setItem("items", JSON.stringify(arr));
-  // };
   render() {
+    const item = this.props.item
     return (
       <View style={styles.taskFullContainer}>
-        <Text style={styles.taskFullName}>{data[0].name}</Text>
+        <Text style={styles.taskFullName}>{item.name}</Text>
         <View style={styles.taskFullDescriptionContainer}>
           <TextInput
             onSubmitEditing={this.onEditDescription}
@@ -36,7 +29,7 @@ class TaskFull extends Component {
             onChangeText={this.onChangeText}
             value={this.state.item}
           />
-          <Text style={styles.taskFullDescription}>{this.onEditDescription}</Text>
+          <Text style={styles.taskFullDescription}>{item.description}</Text>
         </View>
       </View>
     );
