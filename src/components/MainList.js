@@ -85,7 +85,7 @@ export default class MainList extends React.Component {
   moveToScreen = id => {
     const item = this.state.items.filter(item => item.id === id)[0];
     console.log('wybrany item', item);
-    this.props.navigation.navigate('TaskFull', { item: item });
+    this.props.navigation.navigate('TaskFull', { item: item, editDescription: this.editDescription });
   };
 
   render() {
