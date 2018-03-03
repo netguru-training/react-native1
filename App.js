@@ -7,9 +7,19 @@ export default class App extends React.Component {
     super();
     this.state = {
         items: [
-            {title: ' ', desc: ' ', complete: false}
+            { title: ' ',
+            desc: ' ',
+            complete: false }
         ]
     };
+    this.deleteItem = this.deleteItem.bind(this);
+
+    deleteItem(index) {
+        var items = this.state.items;
+        items.splice(index, 1);
+        this.setState({items: items})
+    }
+
   render() {
     return (
       <View style={styles.container}>
