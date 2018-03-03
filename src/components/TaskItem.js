@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import { View, Text, Button, TouchableOpacity } from 'react-native';
 
 class TaskItem extends Component {
-  state = this.props.item;
 
   renderDoneButton(isCompleted) {
     if (isCompleted) {
       return (
         <Button
           onPress={() => {
-            this.setState({ isCompleted: false });
+            this.props.checkItemWithId(this.props.item.id)
           }}
           title="Checked!"
           color="#841584"
@@ -19,7 +18,7 @@ class TaskItem extends Component {
     return (
       <Button
         onPress={() => {
-          this.setState({ isCompleted: true });
+          this.props.checkItemWithId(this.props.item.id)
         }}
         title="Unchecked"
         color="#841584"
@@ -28,16 +27,13 @@ class TaskItem extends Component {
   }
 
   render() {
-    const { name, isCompleted } = this.props.item;
-
-    console.log(name);
-    console.log(isCompleted);
+    const { name, isCompleted, id } = this.props.item;
 
     return (
       <View style={{ flexDirection: 'row', padding: 20 }}>
-        <View style={{flex: 3}}>{this.renderDoneButton(this.state.isCompleted)}</View>
+        <View style={{flex: 3}}>{this.renderDoneButton(isCompleted)}</View>
         <View style={{flex: 5}}>
-        <TouchableOpacity onPress={ () => {console.log("Go to task view")} }>
+        <TouchableOpacity onPress={ () => {} }>
           <Text style={{ fontSize: 20 }}>{name}</Text>
           </TouchableOpacity>
         </View>
