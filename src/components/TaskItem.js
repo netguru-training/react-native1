@@ -33,7 +33,7 @@ class TaskItem extends Component {
       <View style={{ flexDirection: 'row', padding: 20 }}>
         <View style={{flex: 3}}>{this.renderDoneButton(isCompleted)}</View>
         <View style={{flex: 5}}>
-        <TouchableOpacity onPress={ () => {} }>
+        <TouchableOpacity onPress={ () => this.props.moveToScreen(id) }>
           <Text style={{ fontSize: 20 }}>{name}</Text>
           </TouchableOpacity>
         </View>

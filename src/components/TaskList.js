@@ -9,12 +9,11 @@ class TaskList extends Component {
         item={item}
         checkItemWithId={this.props.checkItemWithId}
         editDescription={this.props.editDescription}
+        moveToScreen={this.props.moveToScreen} 
       />
     );
   };
-  componentDidMount() {
-    // this.props.checkItemWithId(0)
-  }
+
   render() {
     return (
       <FlatList

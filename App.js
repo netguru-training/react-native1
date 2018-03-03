@@ -11,12 +11,15 @@ import {
 import TaskList from "./src/components/TaskList";
 import MainList from "./src/components/MainList";
 
+import MainNavigator from './src/MainNavigator'
+
 export default class App extends React.Component {
+  
+
   render() {
-    return (
-      <View style={{ flex: 1 }}>
-        <MainList />
-      </View>
+  return (
+    <MainNavigator/>
+
     );
   }
 }

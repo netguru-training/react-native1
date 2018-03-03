@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,9 +7,10 @@ import {
   TextInput,
   TouchableOpacity,
   AsyncStorage
-} from "react-native";
-import dummyData from "./dummyData";
-import TaskList from "./TaskList";
+} from 'react-native';
+import { StackNavigator } from 'react-navigation';
+import dummyData from './dummyData';
+import TaskList from './TaskList';
 
 export default class MainList extends React.Component {
   state = {
@@ -19,7 +20,7 @@ export default class MainList extends React.Component {
 
   constructor() {
     super();
-    AsyncStorage.getItem("items").then(itemsJSON => {
+    AsyncStorage.getItem('items').then(itemsJSON => {
       if (itemsJSON) {
         this.setState({
           items: JSON.parse(itemsJSON)
@@ -34,7 +35,7 @@ export default class MainList extends React.Component {
 
   onChangeText = text => {
     this.setState({
-      item: { name: text, id: Math.random(), desc: "", isCompleted: false }
+      item: { name: text, id: Math.random(), desc: '', isCompleted: false }
     });
   };
   onNewItem = e => {
@@ -43,11 +44,10 @@ export default class MainList extends React.Component {
       items: arr
     });
     this.save(arr);
-    
   };
 
   checkItemWithId = id => {
-    console.log("CLICK", this.state.items);
+    console.log('CLICK', this.state.items);
 
     const items = this.state.items.map(item => {
       if (item.id === id) {
@@ -79,7 +79,13 @@ export default class MainList extends React.Component {
   };
 
   save = arr => {
-    AsyncStorage.setItem("items", JSON.stringify(arr));
+    AsyncStorage.setItem('items', JSON.stringify(arr));
+  };
+
+  moveToScreen = id => {
+    const item = this.state.items.filter(item => item.id === id)[0];
+    console.log('wybrany item', item);
+    this.props.navigation.navigate('TaskFull', { item: item });
   };
 
   render() {
@@ -100,6 +106,7 @@ export default class MainList extends React.Component {
           data={this.state.items}
           checkItemWithId={this.checkItemWithId}
           editDescription={this.editDescription}
+          moveToScreen={this.moveToScreen}
         />
       </View>
     );
