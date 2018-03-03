@@ -1,16 +1,42 @@
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Dimensions, TextInput } from "react-native";
 import React, { Component } from "react";
 import data from "./dummyData";
 
 const { height, width } = Dimensions.get("window");
 class TaskFull extends Component {
-  // state = {  }
+  state = {
+    description: ""
+  };
+
+  onChangeText = text => {
+    this.setState({
+      description: text
+    });
+  };
+  onEditDescription = () => {
+    // this.setState({
+    //   description: arr,
+    //   item: ""
+    // });
+    return this.state.description;
+    // this.save(arr);
+  };
+  // save = arr => {
+  //   AsyncStorage.setItem("items", JSON.stringify(arr));
+  // };
   render() {
     return (
       <View style={styles.taskFullContainer}>
         <Text style={styles.taskFullName}>{data[0].name}</Text>
         <View style={styles.taskFullDescriptionContainer}>
-          <Text style={styles.taskFullDescription}>{data[0].desc}</Text>
+          <TextInput
+            onSubmitEditing={this.onEditDescription}
+            placeholder="Add description"
+            returnKeyType="done"
+            onChangeText={this.onChangeText}
+            value={this.state.item}
+          />
+          <Text style={styles.taskFullDescription}>{this.onEditDescription}</Text>
         </View>
       </View>
     );
