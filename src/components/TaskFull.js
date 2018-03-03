@@ -7,9 +7,7 @@ class TaskFull extends Component {
   // state = {  }
   render() {
     return (
-      <View 
-     
-      style={styles.taskFullContainer}>
+      <View style={styles.taskFullContainer}>
         <Text style={styles.taskFullName}>{data[0].name}</Text>
         <View style={styles.taskFullDescriptionContainer}>
           <Text style={styles.taskFullDescription}>{data[0].desc}</Text>
@@ -29,23 +27,23 @@ const styles = StyleSheet.create({
     width: 0.95 * width,
     borderWidth: 2,
     borderRadius: 10,
-    borderColor: 'rgba(0,0,0,0.3)'
-},
-taskFullName: {
+    borderColor: "rgba(0,0,0,0.3)"
+  },
+  taskFullName: {
     fontSize: 30,
     flex: 1,
-    width: '100%',
-    backgroundColor: 'white',
-    textAlign: 'center',
+    width: "100%",
+    backgroundColor: "white",
+    textAlign: "center",
     borderBottomWidth: 2,
-    borderColor: 'rgba(0,0,0,0.3)',
+    borderColor: "rgba(0,0,0,0.3)",
     borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    borderTopRightRadius: 10
   },
   taskFullDescriptionContainer: {
     width: "100%",
     flex: 6,
-    backgroundColor: 'lightgray'
+    backgroundColor: "lightgray"
   },
   taskFullDescription: {
     fontSize: 24
