@@ -66,7 +66,6 @@ export default class App extends React.Component {
           <Text>TO DO LIST</Text>
         </View>
         <TextInput
-
           onSubmitEditing={this.onNewItem}
           placeholder='TODO: Title'
           returnKeyType="done"
