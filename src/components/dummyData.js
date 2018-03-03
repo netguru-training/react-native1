@@ -1,4 +1,4 @@
-export default {
+export default data = [
     {
         "name": "do laundry",
         "desc": " desc 1",
@@ -19,4 +19,4 @@ export default {
         "desc": " desc 3",
         "isCompleted": false
     }
-}
+];
