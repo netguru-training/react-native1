@@ -3,6 +3,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import TaskList from './src/components/TaskList'
 
 export default class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+        items: [
+            {title: ' ', desc: ' ', complete: false}
+        ]
+    };
   render() {
     return (
       <View style={styles.container}>
