@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import TaskList from './src/components/TaskList'
+import TaskFull from './src/components/TaskFull'
 
 export default class App extends React.Component {
   constructor() {
@@ -24,6 +25,7 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <TaskList />
+        <TaskFull />
       </View>
     );
   }
