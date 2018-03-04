@@ -4,8 +4,20 @@ import { SwipeRow, Icon, Button, CheckBox, ListItem, Body } from 'native-base';
 
 class TaskItem extends Component {
   renderDoneButton(isCompleted) {
+    if (isCompleted === false) {
+      return (
+        <CheckBox
+          color= "orange"
+          checked={isCompleted}
+          onPress={() => {
+            this.props.checkItemWithId(this.props.item.id);
+          }}
+        />
+      )
+    } else {
     return (
       <CheckBox
+        color= "green"
         checked={isCompleted}
         onPress={() => {
           this.props.checkItemWithId(this.props.item.id);
@@ -13,6 +25,7 @@ class TaskItem extends Component {
       />
     );
   }
+}
 
   render() {
     const { name, isCompleted, id } = this.props.item;
