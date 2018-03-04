@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   StyleSheet,
   Text,
@@ -7,11 +7,11 @@ import {
   TextInput,
   TouchableOpacity,
   LayoutAnimation
-} from 'react-native';
-import { StackNavigator } from 'react-navigation';
-import { Item, Input } from 'native-base';
-import dummyData from './dummyData';
-import TaskList from './TaskList';
+} from "react-native";
+import { StackNavigator } from "react-navigation";
+import { Item, Input } from "native-base";
+import dummyData from "./dummyData";
+import TaskList from "./TaskList";
 
 export default class MainList extends React.Component {
   state = {
@@ -21,21 +21,23 @@ export default class MainList extends React.Component {
   };
 
   static navigationOptions = {
-    title: 'Tasks'
+    title: "Tasks"
   };
-
   componentWillMount() {
     this.setState({ toDoItems: dummyData });
   }
 
   onChangeText = text => {
     this.setState({
-      item: { name: text, id: Math.random(), desc: '', isCompleted: false }
+      item: { name: text, id: Math.random(), desc: "", isCompleted: false }
     });
   };
 
   onNewItem = e => {
-    if (!this.state.item.name || this.state.item.name.replace(/\s+/g, '') === '' ) {
+    if (
+      !this.state.item.name ||
+      this.state.item.name.replace(/\s+/g, "") === ""
+    ) {
       return;
     } else {
       const arr = [this.state.item, ...this.state.toDoItems];
@@ -99,8 +101,8 @@ export default class MainList extends React.Component {
   moveToScreen = id => {
     const allItems = [...this.state.toDoItems, ...this.state.doneItems];
     const item = allItems.filter(item => item.id === id)[0];
-    console.log('wybrany item', item);
-    this.props.navigation.navigate('TaskFull', {
+    console.log("wybrany item", item);
+    this.props.navigation.navigate("TaskFull", {
       item: item,
       editDescription: this.editDescription,
       editName: this.editName
@@ -113,10 +115,10 @@ export default class MainList extends React.Component {
 
     const index = allItems.indexOf(item);
     allItems.splice(index, 1);
-    console.log('allItems', allItems);
-    console.log('item', item);
-    console.log('index', index);
-    console.log('allitems', allItems);
+    console.log("allItems", allItems);
+    console.log("item", item);
+    console.log("index", index);
+    console.log("allitems", allItems);
 
     const newToDoList = allItems.filter(item => !item.isCompleted);
     const newDoneList = allItems.filter(item => item.isCompleted);
@@ -131,7 +133,7 @@ export default class MainList extends React.Component {
         <View style={{ paddingLeft: 4, paddingTop: 4, paddingRight: 4 }}>
           <Item regular>
             <Input
-              style={{ backgroundColor: '#fff' }}
+              style={{ backgroundColor: "#fff" }}
               onSubmitEditing={this.onNewItem}
               placeholder="Enter Your New Task"
               returnKeyType="done"
