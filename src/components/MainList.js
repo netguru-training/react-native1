@@ -15,6 +15,7 @@ import { Item, Input, Icon } from 'native-base';
 import dummyData from './dummyData';
 import TaskList from './TaskList';
 import { Spinner } from './Spinner';
+import EmptyList from './EmptyList';
 
 export default class MainList extends React.Component {
   constructor(props) {
@@ -161,7 +162,7 @@ export default class MainList extends React.Component {
           isReady: true
         });
       } else {
-        this.setState({isReady: true})
+        this.setState({ isReady: true });
       }
     } catch (error) {
       console.log('Error - on getting data from storage');
@@ -180,6 +181,26 @@ export default class MainList extends React.Component {
       );
     } catch (error) {
       console.log('Error - on saving data to storage');
+    }
+  }
+
+  renderList() {
+    if (
+      this.state.toDoItems.length === 0 &&
+      this.state.doneItems.length === 0
+    ) {
+      return <EmptyList />;
+    } else {
+      return (
+        <TaskList
+          style={{ flex: 1 }}
+          toDoItems={this.state.toDoItems}
+          doneItems={this.state.doneItems}
+          checkItemWithId={this.checkItemWithId}
+          moveToScreen={this.moveToScreen}
+          removeItemWithId={this.removeItemWithId}
+        />
+      );
     }
   }
 
@@ -202,14 +223,7 @@ export default class MainList extends React.Component {
               />
             </Item>
           </View>
-          <TaskList
-            style={{ flex: 1 }}
-            toDoItems={this.state.toDoItems}
-            doneItems={this.state.doneItems}
-            checkItemWithId={this.checkItemWithId}
-            moveToScreen={this.moveToScreen}
-            removeItemWithId={this.removeItemWithId}
-          />
+          {this.renderList()}
         </View>
       );
     }
