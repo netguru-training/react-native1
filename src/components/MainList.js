@@ -6,18 +6,28 @@ import {
   ListView,
   TextInput,
   TouchableOpacity,
-  LayoutAnimation
+  LayoutAnimation, 
+  AsyncStorage,
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { Item, Input } from 'native-base';
 import dummyData from './dummyData';
 import TaskList from './TaskList';
+import { Spinner}  from './Spinner'
 
 export default class MainList extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.saveToStorage = this.saveToStorage.bind(this)
+    this.getStorage = this.getStorage.bind(this)
+  }
+
   state = {
     toDoItems: [],
     doneItems: [],
-    item: {}
+    item: {},
+    isReady: false
   };
 
   static navigationOptions = {
@@ -25,13 +35,14 @@ export default class MainList extends React.Component {
   };
 
   componentWillMount() {
-    this.setState({ toDoItems: dummyData });
+    this.getStorage()
   }
+
 
   onChangeText = text => {
     this.setState({
       item: { name: text, id: Math.random(), desc: '', isCompleted: false }
-    });
+    }, this.saveToStorage);
   };
 
   onNewItem = e => {
@@ -43,7 +54,7 @@ export default class MainList extends React.Component {
       this.setState({
         toDoItems: arr,
         item: {}
-      });
+      }, this.saveToStorage);
     }
   };
 
@@ -60,7 +71,7 @@ export default class MainList extends React.Component {
     const newDoneList = itemsAfterChecking.filter(item => item.isCompleted);
 
     LayoutAnimation.spring();
-    this.setState({ toDoItems: newToDoList, doneItems: newDoneList });
+    this.setState({ toDoItems: newToDoList, doneItems: newDoneList }, this.saveToStorage);
   };
 
   editDescription = (description, id) => {
@@ -77,7 +88,7 @@ export default class MainList extends React.Component {
     const newDoneList = items.filter(item => item.isCompleted);
 
     LayoutAnimation.spring();
-    this.setState({ toDoItems: newToDoList, doneItems: newDoneList });
+    this.setState({ toDoItems: newToDoList, doneItems: newDoneList }, this.saveToStorage);
   };
 
   editName = (name, id) => {
@@ -93,13 +104,12 @@ export default class MainList extends React.Component {
     const newDoneList = items.filter(item => item.isCompleted);
 
     LayoutAnimation.spring();
-    this.setState({ toDoItems: newToDoList, doneItems: newDoneList });
+    this.setState({ toDoItems: newToDoList, doneItems: newDoneList }, this.saveToStorage);
   };
 
   moveToScreen = id => {
     const allItems = [...this.state.toDoItems, ...this.state.doneItems];
     const item = allItems.filter(item => item.id === id)[0];
-    console.log('wybrany item', item);
     this.props.navigation.navigate('TaskFull', {
       item: item,
       editDescription: this.editDescription,
@@ -113,19 +123,41 @@ export default class MainList extends React.Component {
 
     const index = allItems.indexOf(item);
     allItems.splice(index, 1);
-    console.log('allItems', allItems);
-    console.log('item', item);
-    console.log('index', index);
-    console.log('allitems', allItems);
 
     const newToDoList = allItems.filter(item => !item.isCompleted);
     const newDoneList = allItems.filter(item => item.isCompleted);
 
     LayoutAnimation.spring();
-    this.setState({ toDoItems: newToDoList, doneItems: newDoneList });
+    this.setState({ toDoItems: newToDoList, doneItems: newDoneList }, this.saveToStorage);
+
   };
 
+  async getStorage() {
+    try {
+      const toDoItems = await AsyncStorage.getItem('toDoItems');
+      const doneItems = await AsyncStorage.getItem('doneItems');
+
+        this.setState({toDoItems: JSON.parse(toDoItems),doneItems: JSON.parse(doneItems), isReady: true})
+      }
+    } catch (error) {
+      console.log("Error - on getting data from storage")
+    }
+  }
+
+  async saveToStorage() {
+     try {
+    await AsyncStorage.setItem('toDoItems', JSON.stringify(this.state.toDoItems));
+    await AsyncStorage.setItem('doneItems', JSON.stringify(this.state.doneItems));
+  } catch (error) {
+    console.log("Error - on saving data to storage")
+  }
+  }
+ 
+
   render() {
+    if (!this.state.isReady) {
+      return <Spinner size='large'/>
+    } else {
     return (
       <View style={{ flex: 1 }}>
         <View style={{ paddingLeft: 4, paddingTop: 4, paddingRight: 4 }}>
@@ -150,5 +182,6 @@ export default class MainList extends React.Component {
         />
       </View>
     );
+  }
   }
 }
