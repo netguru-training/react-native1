@@ -154,11 +154,15 @@ export default class MainList extends React.Component {
     try {
       const toDoItems = await AsyncStorage.getItem('toDoItems');
       const doneItems = await AsyncStorage.getItem('doneItems');
-      this.setState({
-        toDoItems: JSON.parse(toDoItems),
-        doneItems: JSON.parse(doneItems),
-        isReady: true
-      });
+      if (toDoItems !== null && doneItems !== null) {
+        this.setState({
+          toDoItems: JSON.parse(toDoItems),
+          doneItems: JSON.parse(doneItems),
+          isReady: true
+        });
+      } else {
+        this.setState({isReady: true})
+      }
     } catch (error) {
       console.log('Error - on getting data from storage');
     }
