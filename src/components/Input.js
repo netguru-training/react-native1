@@ -7,14 +7,14 @@ const Input = ({ label, placeholder, value, onChangeText, secureTextEntry }) => 
     return(
         <View style={containerStyle}>
             <Text style={labelStyle}>{label}</Text>
-            <TextInput 
+            <TextInput
                 secureTextEntry={secureTextEntry}
                 autoCorrect={false}
                 placeholder={placeholder}
                 autoCapitalize={'none'}
                 style={inputStyle}
-                value={value} 
-                onChangeText={onChangeText} 
+                value={value}
+                onChangeText={onChangeText}
             />
         </View>
     )
@@ -42,5 +42,4 @@ const styles = {
     }
 };
 
-export default Input; 
-
+export default Input;

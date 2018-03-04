@@ -13,7 +13,7 @@ class TaskFull extends Component {
     });
   };
   onEditDescription = () => {
-    this.props.editDescription(tshis.state.description)
+    this.props.editDescription(this.state.description)
     return this.state.description;
   };
   render() {
@@ -43,23 +43,19 @@ const styles = StyleSheet.create({
     elevation: 10,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 10,
     backgroundColor: "transparent",
-    width: 0.95 * width,
-    borderWidth: 2,
-    borderRadius: 10,
-    borderColor: "rgba(0,0,0,0.3)"
+    width: 1 * width
   },
   taskFullName: {
     fontSize: 30,
     flex: 1,
     width: "100%",
-    backgroundColor: "white",
+    backgroundColor: "#ff7f50",
     textAlign: "center",
-    borderBottomWidth: 2,
-    borderColor: "rgba(0,0,0,0.3)",
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10
+    color: "#FFFFFF",
+    paddingTop: 20,
+    paddingRight: 20,
+    paddingLeft: 20
   },
   taskFullDescriptionContainer: {
     width: "100%",
