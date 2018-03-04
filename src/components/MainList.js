@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   StyleSheet,
   Text,
@@ -31,9 +31,8 @@ export default class MainList extends React.Component {
   };
 
   static navigationOptions = {
-    title: 'Tasks'
+    title: "Tasks"
   };
-
   componentWillMount() {
     this.getStorage();
   }
