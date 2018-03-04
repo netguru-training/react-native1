@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -30,17 +30,21 @@ export default class MainList extends React.Component {
 
   onChangeText = text => {
     this.setState({
-      item: { name: text, id: Math.random(), desc: "", isCompleted: false }
+      item: { name: text, id: Math.random(), desc: '', isCompleted: false }
     });
   };
 
   onNewItem = e => {
-    const arr = [this.state.item, ...this.state.toDoItems];
-    LayoutAnimation.spring();
-    this.setState({
-      toDoItems: arr,
-      item: {}
-    });
+    if (!this.state.item.name || this.state.item.name.replace(/\s+/g, '') === '' ) {
+      return;
+    } else {
+      const arr = [this.state.item, ...this.state.toDoItems];
+      LayoutAnimation.spring();
+      this.setState({
+        toDoItems: arr,
+        item: {}
+      });
+    }
   };
 
   checkItemWithId = id => {
@@ -112,7 +116,7 @@ export default class MainList extends React.Component {
     console.log('allItems', allItems);
     console.log('item', item);
     console.log('index', index);
-    console.log('allitems', allItems)
+    console.log('allitems', allItems);
 
     const newToDoList = allItems.filter(item => !item.isCompleted);
     const newDoneList = allItems.filter(item => item.isCompleted);
