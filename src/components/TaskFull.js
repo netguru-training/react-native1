@@ -6,7 +6,8 @@ const { height, width } = Dimensions.get("window");
 class TaskFull extends Component {
   state = {
     description: this.props.navigation.state.params.item.desc || "",
-    name: this.props.navigation.state.params.item.name || ""
+    name: this.props.navigation.state.params.item.name || "",
+    isCompleted: this.props.navigation.state.params.item.isCompleted || false
   };
   onChangeDescriptionText = text => {
     this.setState({
@@ -30,14 +31,11 @@ class TaskFull extends Component {
     this.props.navigation.state.params.editName(this.state.name, id);
   };
 
-  render() {
-    const { id, desc, name } = this.props.navigation.state.params.item;
-    const { params } = this.props.navigation.state;
+  checkCompleted = () => {
+    const { id, isCompleted } = this.props.navigation.state.params.item;
 
-    const item = params.item;
-
-    return (
-      <View style={styles.taskFullContainer}>
+    if (isCompleted === false) {
+      return (
         <TextInput
           style={styles.taskFullName}
           onSubmitEditing={this.onEditName}
@@ -47,7 +45,37 @@ class TaskFull extends Component {
           value={this.state.name}
           blurOnSubmit
           clearButtonMode="while-editing"
+          underlineColorAndroid="transparent"
         />
+      )
+    } else {
+      return (
+        <TextInput
+          style={styles.taskFullNameCompleted}
+          onSubmitEditing={this.onEditName}
+          placeholder="Add name"
+          returnKeyType="done"
+          onChangeText={this.onChangeNameText}
+          value={this.state.name}
+          blurOnSubmit
+          clearButtonMode="while-editing"
+          underlineColorAndroid="transparent"
+        />
+      )
+    }
+  }
+
+
+
+  render() {
+    const { id, desc, name, isCompleted } = this.props.navigation.state.params.item;
+    const { params } = this.props.navigation.state;
+
+    const item = params.item;
+
+    return (
+      <View style={styles.taskFullContainer}>
+        {this.checkCompleted(isCompleted)}
         <View style={styles.taskFullDescriptionContainer}>
           <TextInput
             style={styles.taskFullDescription}
@@ -59,6 +87,7 @@ class TaskFull extends Component {
             textBreakStrategy="simple"
             multiline
             blurOnSubmit
+            underlineColorAndroid="transparent"
           />
 
         </View>
@@ -80,6 +109,17 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     backgroundColor: "#ff7f50",
+    textAlign: "center",
+    color: "#FFFFFF",
+    paddingTop: 20,
+    paddingRight: 20,
+    paddingLeft: 20
+  },
+  taskFullNameCompleted: {
+    fontSize: 30,
+    flex: 1,
+    width: "100%",
+    backgroundColor: "green",
     textAlign: "center",
     color: "#FFFFFF",
     paddingTop: 20,
