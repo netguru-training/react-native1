@@ -34,6 +34,7 @@ export default class MainList extends React.Component {
   static navigationOptions = {
     title: 'Tasks'
   };
+  
   componentWillMount() {
     this.getStorage();
   }
