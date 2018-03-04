@@ -20,11 +20,11 @@ class TaskList extends Component {
 
   render() {
     const sections = () => {
-      if (this.props.toDoItems[0] === undefined && this.props.doneItems[0] === undefined) {
+      if (this.props.toDoItems.length === 0 && this.props.doneItems.length === 0) {
         return [{ data: [], title: 'No Tasks, please add new one :)' }]
-      } else if (this.props.toDoItems[0] === undefined) {
+      } else if (this.props.toDoItems.length === 0) {
         return [{ data: this.props.doneItems, title: 'DONE!' }];
-      } else if (this.props.doneItems[0] === undefined) {
+      } else if (this.props.doneItems.length === 0) {
         return [{ data: this.props.toDoItems, title: 'TO DO!' }];
       } else {
         return [
