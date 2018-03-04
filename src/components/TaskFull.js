@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, Dimensions, TextInput, Button } from "react-native";
 import React, { Component } from "react";
+import { View, Text, StyleSheet, Dimensions, TextInput, Button } from "react-native";
 import data from "./dummyData";
 
 const { height, width } = Dimensions.get("window");
@@ -8,6 +8,11 @@ class TaskFull extends Component {
     description: this.props.navigation.state.params.item.desc || "",
     name: this.props.navigation.state.params.item.name || ""
   };
+  componentWillMount() {
+    console.log(
+      this.props.navigation.state.params.item.desc
+    )
+  }
   onChangeDescriptionText = text => {
     this.setState({
       description: text
@@ -29,17 +34,18 @@ class TaskFull extends Component {
     const { id, name } = this.props.navigation.state.params.item;
     this.props.navigation.state.params.editName(this.state.name, id);
   };
-
+  
   render() {
+    console.log(this.state)
     const { id, desc, name } = this.props.navigation.state.params.item;
     const { params } = this.props.navigation.state;
-
+    
     const item = params.item;
-
+    
     return (
       <View style={styles.taskFullContainer}>
-        <TextInput
-          style={styles.taskFullName}
+      <TextInput
+      style={styles.taskFullName}
           onSubmitEditing={this.onEditName}
           placeholder="Add name"
           returnKeyType="done"

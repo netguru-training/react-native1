@@ -1,76 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Rendering Component with default props 1`] = `
-<View
-  style={
-    Object {
-      "flex": 1,
-    }
-  }
->
-  <View
-    style={
-      Object {
-        "paddingLeft": 4,
-        "paddingRight": 4,
-        "paddingTop": 4,
-      }
-    }
-  >
-    <Styled(Item)
-      regular={true}
-    >
-      <Styled(Input)
-        onChangeText={[Function]}
-        onSubmitEditing={[Function]}
-        placeholder="Enter Your New Task"
-        returnKeyType="done"
-        style={
-          Object {
-            "backgroundColor": "#fff",
-          }
-        }
-      />
-    </Styled(Item)>
-  </View>
-  <TaskList
-    checkItemWithId={[Function]}
-    doneItems={Array []}
-    moveToScreen={[Function]}
-    removeItemWithId={[Function]}
-    style={
-      Object {
-        "flex": 1,
-      }
-    }
-    toDoItems={
-      Array [
-        Object {
-          "desc": " desc 1",
-          "id": 0,
-          "isCompleted": false,
-          "name": "Write basic logic",
-        },
-        Object {
-          "desc": " desc 2",
-          "id": 1,
-          "isCompleted": false,
-          "name": "Make it look nice",
-        },
-        Object {
-          "desc": " desc 3",
-          "id": 2,
-          "isCompleted": false,
-          "name": "Refactor",
-        },
-        Object {
-          "desc": " desc 3",
-          "id": 3,
-          "isCompleted": false,
-          "name": "Add some additional features",
-        },
-      ]
-    }
-  />
-</View>
+<Spinner
+  size="large"
+/>
 `;

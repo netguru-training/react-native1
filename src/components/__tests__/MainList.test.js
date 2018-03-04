@@ -34,21 +34,24 @@ describe("Actions", () => {
   });
   test("When I call the onNewItem function, it adds the item to toDoList", () => {
     instance.onNewItem();
-    expect(wrapper.state().toDoItems.length).toBe(5);
+    expect(wrapper.state().toDoItems.length).toBe(1);
   });
-  test("When I pass 2 to checkItemWithId function, the item with passed it should be moved to doneItems list.", () => {
-    instance.checkItemWithId(2);
+  test("When I pass 0 to checkItemWithId function, the item with passed it should be moved to doneItems list.", () => {
+    instance.checkItemWithId(wrapper.state().toDoItems[0].id);
     expect(wrapper.state().doneItems.length).toBe(1);
   });
   test("When I call editDescription function, it finds the correct item and edit description in it", () => {
-    const id = 3;
+    instance.onChangeText("XXXX");
+    instance.onNewItem();
+    const id = wrapper.state().toDoItems[0].id;
     const desc = "wall";
+    const element = wrapper.state().toDoItems.find(item => item.id === id);
     instance.editDescription(desc, id);
     expect(spyOnEditDescription).toHaveBeenCalled();
-    expect(wrapper.state().toDoItems[id].desc).toBe(desc);
+    expect(element.desc).toBe(desc);
   });
   test("When I call editName function, it finds the correct item and edit name in it", () => {
-    const id = 1;
+    const id = wrapper.state().toDoItems[0].id;
     const name = "manamana";
     const element = wrapper.state().toDoItems.find(item => item.id === id);
     instance.editName(name, id);
@@ -56,7 +59,7 @@ describe("Actions", () => {
     expect(element.name).toBe(name);
   });
   test("When I call moveToScreen function, I should open taskFull screen with current Id", () => {
-    const id = 1;
+    const id = wrapper.state().toDoItems[0].id;
     const wrapperNew = shallow(
       <MainList navigation={{ navigate: jest.fn() }} />
     );
@@ -64,9 +67,9 @@ describe("Actions", () => {
     instanceNew.moveToScreen(id);
   });
   test("When I call removeItemWithId function, it should remove the task", () => {
-    const id = 1;
-    expect(wrapper.state().toDoItems.length).toBe(4);
+    const id =wrapper.state().toDoItems[0].id;
+    expect(wrapper.state().toDoItems.length).toBe(1);
     instance.removeItemWithId(id);
-    expect(wrapper.state().toDoItems.length).toBe(3);
+    expect(wrapper.state().toDoItems.length).toBe(0);
   });
 });
