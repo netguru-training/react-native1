@@ -1,27 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, Button, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { SwipeRow, Icon, Button, CheckBox, ListItem, Body } from 'native-base';
 
 class TaskItem extends Component {
-
   renderDoneButton(isCompleted) {
-    if (isCompleted) {
-      return (
-        <Button
-          onPress={() => {
-            this.props.checkItemWithId(this.props.item.id)
-          }}
-          title="Checked!"
-          color="#841584"
-        />
-      );
-    }
     return (
-      <Button
+      <CheckBox
+        checked={isCompleted}
         onPress={() => {
-          this.props.checkItemWithId(this.props.item.id)
+          this.props.checkItemWithId(this.props.item.id);
         }}
-        title="Unchecked"
-        color="#841584"
       />
     );
   }
@@ -30,14 +18,27 @@ class TaskItem extends Component {
     const { name, isCompleted, id } = this.props.item;
 
     return (
-      <View style={{ flexDirection: 'row', padding: 20 }}>
-        <View style={{flex: 3}}>{this.renderDoneButton(isCompleted)}</View>
-        <View style={{flex: 5}}>
-        <TouchableOpacity onPress={ () => this.props.moveToScreen(id) }>
-          <Text style={{ fontSize: 20 }}>{name}</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      <SwipeRow
+        rightOpenValue={-75}
+        leftOpenValue={0}
+        body={
+          <View style={{ flexDirection: 'row' }}>
+            <View style={{ flex: 1, alignItems: 'center' }}>
+              {this.renderDoneButton(isCompleted)}
+            </View>
+            <View style={{ flex: 5, justifyContent: 'center' }}>
+              <TouchableOpacity onPress={() => this.props.moveToScreen(id)}>
+                <Text style={{ fontSize: 16 }}>{name}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        }
+        right={
+          <Button danger onPress={() => this.props.removeItemWithId(id)}>
+            <Icon active name="trash" />
+          </Button>
+        }
+      />
     );
   }
 }

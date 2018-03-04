@@ -13,7 +13,7 @@ class TaskFull extends Component {
     });
   };
   onEditDescription = () => {
-    this.props.editDescription(this.state.description)
+    this.props.editDescription(tshis.state.description)
     return this.state.description;
   };
   render() {

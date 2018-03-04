@@ -1,25 +1,25 @@
 export default data = [
     {
         "id" : 0,
-        "name": "do laundry",
+        "name": "Write basic logic",
         "desc": " desc 1",
         "isCompleted": false
     },
     {
         "id" : 1,
-        "name": "do tings",
+        "name": "Make it look nice",
         "desc": " desc 2",
-        "isCompleted": true
+        "isCompleted": false
     },
     {
         "id" : 2,
-        "name": "do elo",
+        "name": "Refactor",
         "desc": " desc 3",
-        "isCompleted": true
+        "isCompleted": false
     },
     {
         "id" : 3,
-        "name": "do asdf",
+        "name": "Add some additional features",
         "desc": " desc 3",
         "isCompleted": false
     }
