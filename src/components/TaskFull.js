@@ -5,33 +5,56 @@ import data from "./dummyData";
 const { height, width } = Dimensions.get("window");
 class TaskFull extends Component {
   state = {
-    description: ""
+    description: this.props.navigation.state.params.item.desc || "",
+    name: this.props.navigation.state.params.item.name || ""
   };
-  onChangeText = text => {
+  onChangeDescriptionText = text => {
     this.setState({
       description: text
     });
   };
-  onEditDescription = () => {
-    this.props.editDescription(this.state.description)
-    return this.state.description;
+  onChangeNameText = text => {
+    this.setState({
+      name: text
+    });
   };
+  onEditDescription = () => {
+    const { id, desc } = this.props.navigation.state.params.item;
+    this.props.navigation.state.params.editDescription(
+      this.state.description,
+      id
+    );
+  };
+  onEditName = () => {
+    const { id, name } = this.props.navigation.state.params.item;
+    this.props.navigation.state.params.editName(this.state.name, id);
+  };
+
   render() {
+    const { id, desc, name } = this.props.navigation.state.params.item;
     const { params } = this.props.navigation.state;
 
-    const item = params.item
+    const item = params.item;
+
     return (
       <View style={styles.taskFullContainer}>
-        <Text style={styles.taskFullName}>{item.name}</Text>
+        <TextInput
+          style={styles.taskFullName}
+          onSubmitEditing={this.onEditName}
+          placeholder="Add name"
+          returnKeyType="done"
+          onChangeText={this.onChangeNameText}
+          value={this.state.name}
+        />
         <View style={styles.taskFullDescriptionContainer}>
           <TextInput
+            style={styles.taskFullDescription}
             onSubmitEditing={this.onEditDescription}
             placeholder="Add description"
             returnKeyType="done"
-            onChangeText={this.onChangeText}
-            value={this.state.item}
+            onChangeText={this.onChangeDescriptionText}
+            value={this.state.description}
           />
-          <Text style={styles.taskFullDescription}>{item.description}</Text>
         </View>
       </View>
     );

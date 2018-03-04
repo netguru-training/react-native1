@@ -6,7 +6,6 @@ import {
   ListView,
   TextInput,
   TouchableOpacity,
-  AsyncStorage,
   LayoutAnimation
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
@@ -36,12 +35,16 @@ export default class MainList extends React.Component {
   };
 
   onNewItem = e => {
-    const arr = [this.state.item, ...this.state.toDoItems];
-    LayoutAnimation.spring();
-    this.setState({
-      toDoItems: arr,
-      item: {}
-    });
+    if (!this.state.item.name || this.state.item.name.replace(/\s+/g, '') === '' ) {
+      return;
+    } else {
+      const arr = [this.state.item, ...this.state.toDoItems];
+      LayoutAnimation.spring();
+      this.setState({
+        toDoItems: arr,
+        item: {}
+      });
+    }
   };
 
   checkItemWithId = id => {
@@ -62,21 +65,35 @@ export default class MainList extends React.Component {
 
   editDescription = (description, id) => {
     const allItems = [...this.state.toDoItems, ...this.state.doneItems];
-    const item = allItems.map(item => {
-      item.id === id
-        ? (item = {
-            id: item.id,
-            name: item.name,
-            description: description,
-            isCompleted: item.isCompleted
-          })
-        : item;
+    const items = allItems.map(item => {
+      if (item.id === id) {
+        item.desc = description;
+        return item;
+      }
+      return item;
     });
 
-    const arr = [item, ...this.state.items];
-    this.setState({
-      items: arr
+    const newToDoList = items.filter(item => !item.isCompleted);
+    const newDoneList = items.filter(item => item.isCompleted);
+
+    LayoutAnimation.spring();
+    this.setState({ toDoItems: newToDoList, doneItems: newDoneList });
+  };
+
+  editName = (name, id) => {
+    const allItems = [...this.state.toDoItems, ...this.state.doneItems];
+    const items = allItems.map(item => {
+      if (item.id === id) {
+        item.name = name;
+        return item;
+      }
+      return item;
     });
+    const newToDoList = items.filter(item => !item.isCompleted);
+    const newDoneList = items.filter(item => item.isCompleted);
+
+    LayoutAnimation.spring();
+    this.setState({ toDoItems: newToDoList, doneItems: newDoneList });
   };
 
   moveToScreen = id => {
@@ -85,7 +102,8 @@ export default class MainList extends React.Component {
     console.log('wybrany item', item);
     this.props.navigation.navigate('TaskFull', {
       item: item,
-      editDescription: this.editDescription
+      editDescription: this.editDescription,
+      editName: this.editName
     });
   };
 
@@ -98,7 +116,7 @@ export default class MainList extends React.Component {
     console.log('allItems', allItems);
     console.log('item', item);
     console.log('index', index);
-    console.log('allitems', allItems)
+    console.log('allitems', allItems);
 
     const newToDoList = allItems.filter(item => !item.isCompleted);
     const newDoneList = allItems.filter(item => item.isCompleted);
@@ -127,7 +145,6 @@ export default class MainList extends React.Component {
           toDoItems={this.state.toDoItems}
           doneItems={this.state.doneItems}
           checkItemWithId={this.checkItemWithId}
-          editDescription={this.editDescription}
           moveToScreen={this.moveToScreen}
           removeItemWithId={this.removeItemWithId}
         />
