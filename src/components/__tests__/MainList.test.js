@@ -28,12 +28,15 @@ describe("Actions", () => {
     expect(spyOnChangeText).toHaveBeenCalled();
     expect(wrapper.state().item.name).toBe("XXXX");
   });
-  test("When I pass 2 to checkItemWithId function, the item with passed it should be moved to doneItems list.", () => {
-    instance.checkItemWithId(2);
-    expect(wrapper.state().doneItems.length).toBe(1);
-  });
   test('When I call the onNewItem function, it adds the item to toDoList', ()=> {
       instance.onNewItem();
       expect(wrapper.state().toDoItems.length).toBe(4);
+    })
+                  test("When I pass 2 to checkItemWithId function, the item with passed it should be moved to doneItems list.", () => {
+                    instance.checkItemWithId(2);
+                    expect(wrapper.state().doneItems.length).toBe(1);
+                  });
+  test('When I call editDescription function, it finds the correct item and edit description in it', ()=> {
+      
   })
 });
