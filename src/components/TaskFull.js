@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, Dimensions, TextInput, Button } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  TextInput,
+  Button
+} from "react-native";
 import React, { Component } from "react";
 import data from "./dummyData";
 
@@ -47,9 +54,11 @@ class TaskFull extends Component {
           value={this.state.name}
           blurOnSubmit
           clearButtonMode="while-editing"
+          underlineColorAndroid="transparent"
         />
         <View style={styles.taskFullDescriptionContainer}>
           <TextInput
+            underlineColorAndroid="transparent"
             style={styles.taskFullDescription}
             onSubmitEditing={this.onEditDescription}
             placeholder="Add description"
@@ -60,7 +69,6 @@ class TaskFull extends Component {
             multiline
             blurOnSubmit
           />
-
         </View>
       </View>
     );
@@ -95,7 +103,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
     color: "#57606f",
-    top:50
+    top: 50
   }
 });
 
