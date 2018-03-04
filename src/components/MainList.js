@@ -10,7 +10,7 @@ import {
   AsyncStorage,
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import { Item, Input } from 'native-base';
+import { Item, Input, Icon } from 'native-base';
 import dummyData from './dummyData';
 import TaskList from './TaskList';
 import { Spinner}  from './Spinner'
@@ -161,9 +161,10 @@ export default class MainList extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <View style={{ paddingLeft: 4, paddingTop: 4, paddingRight: 4 }}>
-          <Item regular>
+          <Item rounded>
+            <Icon style={{color: "#ff7f50"}} active name='md-add-circle' />
             <Input
-              style={{ backgroundColor: '#fff' }}
+
               onSubmitEditing={this.onNewItem}
               placeholder="Enter Your New Task"
               returnKeyType="done"
