@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Dimensions, TextInput } from "react-native";
+import { View, Text, StyleSheet, Dimensions, TextInput, Button } from "react-native";
 import React, { Component } from "react";
 import data from "./dummyData";
 
@@ -45,6 +45,8 @@ class TaskFull extends Component {
           returnKeyType="done"
           onChangeText={this.onChangeNameText}
           value={this.state.name}
+          blurOnSubmit
+          clearButtonMode="while-editing"
         />
         <View style={styles.taskFullDescriptionContainer}>
           <TextInput
@@ -54,7 +56,11 @@ class TaskFull extends Component {
             returnKeyType="done"
             onChangeText={this.onChangeDescriptionText}
             value={this.state.description}
+            textBreakStrategy="simple"
+            multiline
+            blurOnSubmit
           />
+
         </View>
       </View>
     );
@@ -83,10 +89,13 @@ const styles = StyleSheet.create({
   taskFullDescriptionContainer: {
     width: "100%",
     flex: 6,
-    backgroundColor: "lightgray"
+    backgroundColor: "#f1f2f6"
   },
   taskFullDescription: {
-    fontSize: 24
+    fontSize: 20,
+    textAlign: "center",
+    color: "#57606f",
+    top:50
   }
 });
 
