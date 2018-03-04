@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -32,7 +32,7 @@ export default class MainList extends React.Component {
   };
 
   static navigationOptions = {
-    title: "Tasks"
+    title: 'Tasks'
   };
   componentWillMount() {
     this.getStorage();
@@ -211,8 +211,8 @@ export default class MainList extends React.Component {
       return (
         <View style={{ flex: 1 }}>
           <StatusBar barStyle="dark-content" />
-          <View style={{ paddingLeft: 4, paddingTop: 4, paddingRight: 4 }}>
-            <Item rounded>
+          <View style={{ paddingLeft: 8, paddingTop: 8, paddingRight: 8 }}>
+            <Item rounded style={{ backgroundColor: '#fff' }}>
               <Icon style={{ color: '#ff7f50' }} active name="md-add-circle" />
               <Input
                 onSubmitEditing={this.onNewItem}
