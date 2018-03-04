@@ -6,21 +6,21 @@ import {
   ListView,
   TextInput,
   TouchableOpacity,
-  LayoutAnimation, 
+  LayoutAnimation,
   AsyncStorage,
+  StatusBar
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { Item, Input, Icon } from 'native-base';
 import dummyData from './dummyData';
 import TaskList from './TaskList';
-import { Spinner}  from './Spinner'
+import { Spinner } from './Spinner';
 
 export default class MainList extends React.Component {
-
   constructor(props) {
-    super(props)
-    this.saveToStorage = this.saveToStorage.bind(this)
-    this.getStorage = this.getStorage.bind(this)
+    super(props);
+    this.saveToStorage = this.saveToStorage.bind(this);
+    this.getStorage = this.getStorage.bind(this);
   }
 
   state = {
@@ -35,26 +35,34 @@ export default class MainList extends React.Component {
   };
 
   componentWillMount() {
-    this.getStorage()
+    this.getStorage();
   }
 
-
   onChangeText = text => {
-    this.setState({
-      item: { name: text, id: Math.random(), desc: '', isCompleted: false }
-    }, this.saveToStorage);
+    this.setState(
+      {
+        item: { name: text, id: Math.random(), desc: '', isCompleted: false }
+      },
+      this.saveToStorage
+    );
   };
 
   onNewItem = e => {
-    if (!this.state.item.name || this.state.item.name.replace(/\s+/g, '') === '' ) {
+    if (
+      !this.state.item.name ||
+      this.state.item.name.replace(/\s+/g, '') === ''
+    ) {
       return;
     } else {
       const arr = [this.state.item, ...this.state.toDoItems];
       LayoutAnimation.spring();
-      this.setState({
-        toDoItems: arr,
-        item: {}
-      }, this.saveToStorage);
+      this.setState(
+        {
+          toDoItems: arr,
+          item: {}
+        },
+        this.saveToStorage
+      );
     }
   };
 
@@ -71,7 +79,10 @@ export default class MainList extends React.Component {
     const newDoneList = itemsAfterChecking.filter(item => item.isCompleted);
 
     LayoutAnimation.spring();
-    this.setState({ toDoItems: newToDoList, doneItems: newDoneList }, this.saveToStorage);
+    this.setState(
+      { toDoItems: newToDoList, doneItems: newDoneList },
+      this.saveToStorage
+    );
   };
 
   editDescription = (description, id) => {
@@ -88,7 +99,10 @@ export default class MainList extends React.Component {
     const newDoneList = items.filter(item => item.isCompleted);
 
     LayoutAnimation.spring();
-    this.setState({ toDoItems: newToDoList, doneItems: newDoneList }, this.saveToStorage);
+    this.setState(
+      { toDoItems: newToDoList, doneItems: newDoneList },
+      this.saveToStorage
+    );
   };
 
   editName = (name, id) => {
@@ -104,7 +118,10 @@ export default class MainList extends React.Component {
     const newDoneList = items.filter(item => item.isCompleted);
 
     LayoutAnimation.spring();
-    this.setState({ toDoItems: newToDoList, doneItems: newDoneList }, this.saveToStorage);
+    this.setState(
+      { toDoItems: newToDoList, doneItems: newDoneList },
+      this.saveToStorage
+    );
   };
 
   moveToScreen = id => {
@@ -128,61 +145,70 @@ export default class MainList extends React.Component {
     const newDoneList = allItems.filter(item => item.isCompleted);
 
     LayoutAnimation.spring();
-    this.setState({ toDoItems: newToDoList, doneItems: newDoneList }, this.saveToStorage);
-
+    this.setState(
+      { toDoItems: newToDoList, doneItems: newDoneList },
+      this.saveToStorage
+    );
   };
 
   async getStorage() {
     try {
       const toDoItems = await AsyncStorage.getItem('toDoItems');
       const doneItems = await AsyncStorage.getItem('doneItems');
-
-        this.setState({toDoItems: JSON.parse(toDoItems),doneItems: JSON.parse(doneItems), isReady: true})
-      }
+      this.setState({
+        toDoItems: JSON.parse(toDoItems),
+        doneItems: JSON.parse(doneItems),
+        isReady: true
+      });
     } catch (error) {
-      console.log("Error - on getting data from storage")
+      console.log('Error - on getting data from storage');
     }
   }
 
   async saveToStorage() {
-     try {
-    await AsyncStorage.setItem('toDoItems', JSON.stringify(this.state.toDoItems));
-    await AsyncStorage.setItem('doneItems', JSON.stringify(this.state.doneItems));
-  } catch (error) {
-    console.log("Error - on saving data to storage")
+    try {
+      await AsyncStorage.setItem(
+        'toDoItems',
+        JSON.stringify(this.state.toDoItems)
+      );
+      await AsyncStorage.setItem(
+        'doneItems',
+        JSON.stringify(this.state.doneItems)
+      );
+    } catch (error) {
+      console.log('Error - on saving data to storage');
+    }
   }
-  }
- 
 
   render() {
     if (!this.state.isReady) {
-      return <Spinner size='large'/>
+      return <Spinner size="large" />;
     } else {
-    return (
-      <View style={{ flex: 1 }}>
-        <View style={{ paddingLeft: 4, paddingTop: 4, paddingRight: 4 }}>
-          <Item rounded>
-            <Icon style={{color: "#ff7f50"}} active name='md-add-circle' />
-            <Input
-
-              onSubmitEditing={this.onNewItem}
-              placeholder="Enter Your New Task"
-              returnKeyType="done"
-              onChangeText={this.onChangeText}
-              value={this.state.item.name}
-            />
-          </Item>
+      return (
+        <View style={{ flex: 1 }}>
+          <StatusBar barStyle="dark-content" />
+          <View style={{ paddingLeft: 4, paddingTop: 4, paddingRight: 4 }}>
+            <Item rounded>
+              <Icon style={{ color: '#ff7f50' }} active name="md-add-circle" />
+              <Input
+                onSubmitEditing={this.onNewItem}
+                placeholder="Enter Your New Task"
+                returnKeyType="done"
+                onChangeText={this.onChangeText}
+                value={this.state.item.name}
+              />
+            </Item>
+          </View>
+          <TaskList
+            style={{ flex: 1 }}
+            toDoItems={this.state.toDoItems}
+            doneItems={this.state.doneItems}
+            checkItemWithId={this.checkItemWithId}
+            moveToScreen={this.moveToScreen}
+            removeItemWithId={this.removeItemWithId}
+          />
         </View>
-        <TaskList
-          style={{ flex: 1 }}
-          toDoItems={this.state.toDoItems}
-          doneItems={this.state.doneItems}
-          checkItemWithId={this.checkItemWithId}
-          moveToScreen={this.moveToScreen}
-          removeItemWithId={this.removeItemWithId}
-        />
-      </View>
-    );
-  }
+      );
+    }
   }
 }
