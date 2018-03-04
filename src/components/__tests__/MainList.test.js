@@ -36,4 +36,5 @@ describe("Actions", () => {
       instance.onNewItem();
       expect(wrapper.state().toDoItems.length).toBe(4);
   })
+  test('')
 });
