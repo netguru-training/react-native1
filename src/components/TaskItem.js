@@ -4,8 +4,20 @@ import { SwipeRow, Icon, Button, CheckBox, ListItem, Body } from 'native-base';
 
 class TaskItem extends Component {
   renderDoneButton(isCompleted) {
+    if (isCompleted === false) {
+      return (
+        <CheckBox
+          color= "orange"
+          checked={isCompleted}
+          onPress={() => {
+            this.props.checkItemWithId(this.props.item.id);
+          }}
+        />
+      )
+    } else {
     return (
       <CheckBox
+        color= "green"
         checked={isCompleted}
         onPress={() => {
           this.props.checkItemWithId(this.props.item.id);
@@ -13,6 +25,7 @@ class TaskItem extends Component {
       />
     );
   }
+}
 
   render() {
     const { name, isCompleted, id } = this.props.item;
@@ -20,7 +33,7 @@ class TaskItem extends Component {
     return (
       <SwipeRow
         rightOpenValue={-75}
-        leftOpenValue={0}
+        leftOpenValue={75}
         body={
           <View style={{ flexDirection: 'row' }}>
             <View style={{ flex: 1, alignItems: 'center' }}>
@@ -32,6 +45,11 @@ class TaskItem extends Component {
               </TouchableOpacity>
             </View>
           </View>
+        }
+        left={
+          <Button success onPress={() => this.props.moveToScreen(id)}>
+            <Icon active name="md-information-circle" />
+          </Button>
         }
         right={
           <Button danger onPress={() => this.props.removeItemWithId(id)}>

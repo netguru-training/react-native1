@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -15,6 +15,7 @@ import { Item, Input, Icon } from 'native-base';
 import dummyData from './dummyData';
 import TaskList from './TaskList';
 import { Spinner } from './Spinner';
+import EmptyList from './EmptyList';
 
 export default class MainList extends React.Component {
   constructor(props) {
@@ -31,8 +32,9 @@ export default class MainList extends React.Component {
   };
 
   static navigationOptions = {
-    title: "Tasks"
+    title: 'Tasks'
   };
+  
   componentWillMount() {
     this.getStorage();
   }
@@ -154,11 +156,15 @@ export default class MainList extends React.Component {
     try {
       const toDoItems = await AsyncStorage.getItem('toDoItems');
       const doneItems = await AsyncStorage.getItem('doneItems');
-      this.setState({
-        toDoItems: JSON.parse(toDoItems),
-        doneItems: JSON.parse(doneItems),
-        isReady: true
-      });
+      if (toDoItems !== null && doneItems !== null) {
+        this.setState({
+          toDoItems: JSON.parse(toDoItems),
+          doneItems: JSON.parse(doneItems),
+          isReady: true
+        });
+      } else {
+        this.setState({ isReady: true });
+      }
     } catch (error) {
       console.log('Error - on getting data from storage');
     }
@@ -179,6 +185,26 @@ export default class MainList extends React.Component {
     }
   }
 
+  renderList() {
+    if (
+      this.state.toDoItems.length === 0 &&
+      this.state.doneItems.length === 0
+    ) {
+      return <EmptyList />;
+    } else {
+      return (
+        <TaskList
+          style={{ flex: 1 }}
+          toDoItems={this.state.toDoItems}
+          doneItems={this.state.doneItems}
+          checkItemWithId={this.checkItemWithId}
+          moveToScreen={this.moveToScreen}
+          removeItemWithId={this.removeItemWithId}
+        />
+      );
+    }
+  }
+
   render() {
     if (!this.state.isReady) {
       return <Spinner size="large" />;
@@ -186,8 +212,8 @@ export default class MainList extends React.Component {
       return (
         <View style={{ flex: 1 }}>
           <StatusBar barStyle="dark-content" />
-          <View style={{ paddingLeft: 4, paddingTop: 4, paddingRight: 4 }}>
-            <Item rounded>
+          <View style={{ paddingLeft: 8, paddingTop: 8, paddingRight: 8 }}>
+            <Item rounded style={{ backgroundColor: '#fff' }}>
               <Icon style={{ color: '#ff7f50' }} active name="md-add-circle" />
               <Input
                 onSubmitEditing={this.onNewItem}
@@ -198,14 +224,7 @@ export default class MainList extends React.Component {
               />
             </Item>
           </View>
-          <TaskList
-            style={{ flex: 1 }}
-            toDoItems={this.state.toDoItems}
-            doneItems={this.state.doneItems}
-            checkItemWithId={this.checkItemWithId}
-            moveToScreen={this.moveToScreen}
-            removeItemWithId={this.removeItemWithId}
-          />
+          {this.renderList()}
         </View>
       );
     }

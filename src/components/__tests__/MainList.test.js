@@ -40,6 +40,10 @@ describe("Actions", () => {
     instance.checkItemWithId(wrapper.state().toDoItems[0].id);
     expect(wrapper.state().doneItems.length).toBe(1);
   });
+  test('When I call the onNewItem function, it adds the item to toDoList', ()=> {
+      instance.onNewItem();
+      expect(wrapper.state().toDoItems.length).toBe(4);
+  })
   test("When I call editDescription function, it finds the correct item and edit description in it", () => {
     instance.onChangeText("XXXX");
     instance.onNewItem();
